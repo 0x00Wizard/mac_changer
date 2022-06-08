@@ -4,6 +4,7 @@ import subprocess
 import optparse
 import re
 
+
 def get_args():
     parser = optparse.OptionParser()
     parser.add_option("-i", "--interface", dest="interface",
@@ -27,10 +28,14 @@ def change_mac(interface, new_mac):
 
 
 options = get_args()
+
+
 # change_mac(options.interface, options.new_mac)
+def get_mac_address(interface, ):
+    ifconfig_result = subprocess.check_output(["ifconfig", options.interface])
+    mac_address_search = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", ifconfig_result)
+    if mac_address_search:
+        print(mac_address_search.group(0))
 
-ifconfig_result = subprocess.check_output(["ifconfig", options.interface])
-print(ifconfig_result)
-
-mac_address_search = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", ifconfig_result)
-print(mac_address_search.group(0))
+    else:
+        print("[-] Could not find MAC address.")
