@@ -32,4 +32,5 @@ options = get_args()
 ifconfig_result = subprocess.check_output(["ifconfig", options.interface])
 print(ifconfig_result)
 
-re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w")
+mac_address_search = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", ifconfig_result)
+print(mac_address_search.group(0))
