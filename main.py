@@ -30,12 +30,14 @@ def change_mac(interface, new_mac):
 options = get_args()
 
 
-# change_mac(options.interface, options.new_mac)
-def get_mac_address(interface, ):
-    ifconfig_result = subprocess.check_output(["ifconfig", options.interface])
+def get_mac_address(interface):
+    ifconfig_result = subprocess.check_output(["ifconfig", interface])
     mac_address_search = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", ifconfig_result)
     if mac_address_search:
-        print(mac_address_search.group(0))
-
+        return mac_address_search.group(0)
     else:
-        print("[-] Could not find MAC address.")
+        return print("[-] Could not find MAC address.")
+
+
+# change_mac(options.interface, options.new_mac)
+get_mac_address(options.interface)
