@@ -12,7 +12,7 @@ def get_args():
     parser.add_option("-m", "--mac", dest="new_mac",
                       help="New MAC address")
     parser.add_option("-o", "--os", dest="os",
-                      help="Enter if mac or linux")
+                      help="Enter if macos or linux")
     (options, args) = parser.parse_args()
     if not options.interface:
         parser.error("[-] Please specify an interface, use --help for more info")
@@ -23,10 +23,11 @@ def get_args():
 
 
 def change_mac(interface, new_mac):
-    print(f"[+] Changing MAC address for {interface} to {new_mac}")
-    subprocess.call(["ifconfig", interface, "down"])
-    subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
-    subprocess.call(["ifconfig", interface, "up"])
+    if interface.os == "macos":
+        print(f"[+] Changing MAC address for {interface} to {new_mac}")
+        subprocess.call(["ifconfig", interface, "down"])
+        subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
+        subprocess.call(["ifconfig", interface, "up"])
 
 
 def get_mac_address(interface):
